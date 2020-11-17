@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ProjetRecette</string>
+    <string name="title_home">Home</string>
+    <string name="title_recipe">Recipe</string>
+    <string name="title_favorite">Favorite</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_login">Login</string>
+    <string name="title_signup">SignUp</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>
