@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "242419579819",
+    "firebase_url": "https://projet-recette-sfk.firebaseio.com",
+    "project_id": "projet-recette-sfk",
+    "storage_bucket": "projet-recette-sfk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242419579819:android:ab31f8914da7fdc50130ee",
+        "android_client_info": {
+          "package_name": "com.example.projetrecette"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242419579819-2omfrecurgo6gkh24c2k34nf3aio0f1t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.projetrecette",
+            "certificate_hash": "9dbf6b9fab530897a1c244e19a6afbf16bb530e4"
+          }
+        },
+        {
+          "client_id": "242419579819-m7kdit840i50g4njki3pih42iink09t5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUZYMgQp0loz7IRjbTpXCpri5xCNohjnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242419579819-m7kdit840i50g4njki3pih42iink09t5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
