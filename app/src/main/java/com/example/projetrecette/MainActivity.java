@@ -11,15 +11,17 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.Window;
+import android.widget.Toast;
 
+import com.example.projetrecette.Drawer.Login.LoginActivity;
+import com.example.projetrecette.Drawer.SignUp.SignUpActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.Objects;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -35,11 +37,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         Appbar();
         Drawer();
+        checkLogin();
 
+    }
 
-
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkLogin();
     }
 
     public void Appbar(){
@@ -57,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
     }
 
     @Override
@@ -72,11 +78,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.navigation_login:
-                getSupportFragmentManager().beginTransaction().replace(R.id.MainFragment,new MessageFragment()).commit();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.navigation_signup:
+                Intent intent2 = new Intent(this, SignUpActivity.class);
+                startActivity(intent2);
+                break;
         }
-
-
-
         return true;
+    }
+
+    public void checkLogin(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            Toast.makeText(getApplicationContext(), "Someone is logged on", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+        }else{
+            Toast.makeText(getApplicationContext(), "Personne", Toast.LENGTH_SHORT).show();
+        }
     }
 }
