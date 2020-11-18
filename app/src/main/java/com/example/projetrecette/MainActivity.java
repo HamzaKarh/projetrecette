@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private AppBarConfiguration mAppBarConfiguration;
     NavController navController;
     DrawerLayout drawerLayout;
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         navController = Navigation.findNavController(this, R.id.MainFragment);
         drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigationView);
         Appbar();
         Drawer();
         checkLogin();
@@ -56,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void Drawer(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        NavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -85,6 +86,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent2 = new Intent(this, SignUpActivity.class);
                 startActivity(intent2);
                 break;
+            case R.id.navigation_signout:
+                FirebaseAuth.getInstance().signOut();
+                checkLogin();
+                break;
+
         }
         return true;
     }
@@ -92,10 +98,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void checkLogin(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            Toast.makeText(getApplicationContext(), "Someone is logged on", Toast.LENGTH_SHORT).show();
-            FirebaseAuth.getInstance().signOut();
+            navigationView.getMenu().setGroupVisible(R.id.drawerLoggedIn,true);
+            navigationView.getMenu().setGroupVisible(R.id.drawerUnlogged,false);
+
         }else{
-            Toast.makeText(getApplicationContext(), "Personne", Toast.LENGTH_SHORT).show();
+            navigationView.getMenu().setGroupVisible(R.id.drawerLoggedIn,false);
+            navigationView.getMenu().setGroupVisible(R.id.drawerUnlogged,true);
         }
     }
 }
