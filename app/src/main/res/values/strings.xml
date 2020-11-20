@@ -11,4 +11,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_signout">Se déconnecter</string>
     <string name="title_information">Information</string>
+    <string name="title_profil">Mon Profil</string>
+    <string name="title_vos_recettes">Vos Recettes</string>
+    <string name="title_parametres">Paramètres</string>
 </resources>

@@ -26,8 +26,22 @@
         android:id="@+id/drawerLoggedIn"
         android:checkableBehavior="single"
         android:visible="false">
+
+        <item
+            android:id="@+id/navigation_profil"
+            android:icon="@drawable/ic_baseline_account_box_24"
+            android:title="@string/title_profil" />
+        <item
+            android:id="@+id/navigation_vos_recettes"
+            android:icon="@drawable/ic_baseline_book_24"
+            android:title="@string/title_vos_recettes" />
+        <item
+            android:id="@+id/navigation_parametres"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="@string/title_parametres" />
         <item
             android:id="@+id/navigation_signout"
+            android:icon="@drawable/ic_baseline_exit_to_app_24"
             android:title="@string/title_signout" />
 
 

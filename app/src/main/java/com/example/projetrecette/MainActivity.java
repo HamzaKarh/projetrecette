@@ -15,14 +15,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projetrecette.Drawer.Login.LoginActivity;
 import com.example.projetrecette.Drawer.SignUp.SignUpActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavController navController;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -107,6 +113,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             /*Header*/
             navigationView.removeHeaderView(navigationView.getHeaderView(0));
             navigationView.inflateHeaderView(R.layout.drawer_header);
+
+            /*Initialisation*/
+
+            retrieveData();
+
         }else{
             /*Items*/
             navigationView.getMenu().setGroupVisible(R.id.drawerLoggedIn,false);
@@ -117,4 +128,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.inflateHeaderView(R.layout.drawer_header_unlogged);
         }
     }
+
+    public void retrieveData(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final TextView email = (TextView) navigationView.getHeaderView(0).findViewById(R.id.drawer_email);
+        final TextView fullname = (TextView) navigationView.getHeaderView(0).findViewById(R.id.drawer_fullname);
+        db.collection("users").document(userid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                email.setText(documentSnapshot.getString("Email"));
+                fullname.setText(documentSnapshot.getString("Fullname"));
+            }
+        });
+
+
+    }
+
 }
