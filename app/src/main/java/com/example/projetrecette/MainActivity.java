@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.projetrecette.Drawer.Login.LoginActivity;
@@ -98,12 +99,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void checkLogin(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
+
+            /*Items*/
             navigationView.getMenu().setGroupVisible(R.id.drawerLoggedIn,true);
             navigationView.getMenu().setGroupVisible(R.id.drawerUnlogged,false);
 
+            /*Header*/
+            navigationView.removeHeaderView(navigationView.getHeaderView(0));
+            navigationView.inflateHeaderView(R.layout.drawer_header);
         }else{
+            /*Items*/
             navigationView.getMenu().setGroupVisible(R.id.drawerLoggedIn,false);
             navigationView.getMenu().setGroupVisible(R.id.drawerUnlogged,true);
+
+            /*Header*/
+            navigationView.removeHeaderView(navigationView.getHeaderView(0));
+            navigationView.inflateHeaderView(R.layout.drawer_header_unlogged);
         }
     }
 }

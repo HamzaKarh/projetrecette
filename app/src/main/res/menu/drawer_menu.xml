@@ -8,11 +8,18 @@
         android:visible="true">
         <item
             android:id="@+id/navigation_login"
+            android:icon="@drawable/ic_baseline_account_box_24"
             android:title="@string/title_login" />
 
         <item
             android:id="@+id/navigation_signup"
+            android:icon="@drawable/ic_baseline_person_add_24"
             android:title="@string/title_signup" />
+
+        <item
+            android:id="@+id/navigation_information"
+            android:icon="@drawable/ic_baseline_info_24"
+            android:title="@string/title_information" />
     </group>
 
     <group

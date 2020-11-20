@@ -75,8 +75,6 @@ public class SignUpActivity extends AppCompatActivity {
                 });
             }
         });
-
-
     }
 
     public void adddatatoFireBase(String email, String fullname){
