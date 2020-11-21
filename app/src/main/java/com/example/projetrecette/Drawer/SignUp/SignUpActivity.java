@@ -83,6 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
         Map<String,Object> user = new HashMap<>();
         user.put("Email", email);
         user.put("Fullname", fullname);
+        user.put("Photo_de_Profile", "default_pic.png");
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

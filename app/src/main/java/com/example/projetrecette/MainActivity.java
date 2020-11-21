@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.projetrecette.Drawer.Login.LoginActivity;
+import com.example.projetrecette.Drawer.MonCompte.MonCompte;
 import com.example.projetrecette.Drawer.SignUp.SignUpActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -99,11 +100,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent2 = new Intent(this, SignUpActivity.class);
                 startActivity(intent2);
                 break;
+            case R.id.navigation_profil:
+                Intent intent3 = new Intent(this, MonCompte.class);
+                startActivity(intent3);
             case R.id.navigation_signout:
                 FirebaseAuth.getInstance().signOut();
                 checkLogin();
                 break;
-
         }
         return true;
     }
@@ -147,10 +150,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 email.setText(documentSnapshot.getString("Email"));
                 fullname.setText(documentSnapshot.getString("Fullname"));
+                final StorageReference pathphoto = mStorageRef.child("Photo_de_Profil").child(documentSnapshot.getString("Photo_de_Profile"));
+                GlideApp.with(getApplicationContext()).load(pathphoto).into(photoProfil);
 
             }
         });
-        GlideApp.with(this).load(pathphoto).into(photoProfil);
+
 
 
 
