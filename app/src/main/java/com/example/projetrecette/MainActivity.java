@@ -14,20 +14,32 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.projetrecette.Drawer.Login.LoginActivity;
 import com.example.projetrecette.Drawer.SignUp.SignUpActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    private AppBarConfiguration mAppBarConfiguration;
     NavController navController;
     DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    StorageReference mStorageRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         navController = Navigation.findNavController(this, R.id.MainFragment);
         drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigationView);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
         Appbar();
         Drawer();
         checkLogin();
@@ -56,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void Drawer(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        NavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -85,6 +99,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent2 = new Intent(this, SignUpActivity.class);
                 startActivity(intent2);
                 break;
+            case R.id.navigation_signout:
+                FirebaseAuth.getInstance().signOut();
+                checkLogin();
+                break;
+
         }
         return true;
     }
@@ -92,10 +111,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void checkLogin(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            Toast.makeText(getApplicationContext(), "Someone is logged on", Toast.LENGTH_SHORT).show();
-            FirebaseAuth.getInstance().signOut();
+
+            /*Items*/
+            navigationView.getMenu().setGroupVisible(R.id.drawerLoggedIn,true);
+            navigationView.getMenu().setGroupVisible(R.id.drawerUnlogged,false);
+
+            /*Header*/
+            navigationView.removeHeaderView(navigationView.getHeaderView(0));
+            navigationView.inflateHeaderView(R.layout.drawer_header);
+
+            /*Initialisation*/
+
+            retrieveData();
+
         }else{
-            Toast.makeText(getApplicationContext(), "Personne", Toast.LENGTH_SHORT).show();
+            /*Items*/
+            navigationView.getMenu().setGroupVisible(R.id.drawerLoggedIn,false);
+            navigationView.getMenu().setGroupVisible(R.id.drawerUnlogged,true);
+
+            /*Header*/
+            navigationView.removeHeaderView(navigationView.getHeaderView(0));
+            navigationView.inflateHeaderView(R.layout.drawer_header_unlogged);
         }
     }
+
+    public void retrieveData(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final StorageReference pathphoto = mStorageRef.child("Photo_de_Profil").child("laurent.jpg");
+        String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final TextView email = (TextView) navigationView.getHeaderView(0).findViewById(R.id.drawer_email);
+        final TextView fullname = (TextView) navigationView.getHeaderView(0).findViewById(R.id.drawer_fullname);
+        final ImageView photoProfil = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.photoProfile);
+        db.collection("users").document(userid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                email.setText(documentSnapshot.getString("Email"));
+                fullname.setText(documentSnapshot.getString("Fullname"));
+
+            }
+        });
+        GlideApp.with(this).load(pathphoto).into(photoProfil);
+
+
+
+
+
+
+    }
+
 }
+
+
