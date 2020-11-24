@@ -8,7 +8,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.projetrecette.Drawer.Login.LoginActivity;
+import com.example.projetrecette.Drawer.MesRecettes.mesRecettesActivity;
 import com.example.projetrecette.Drawer.MonCompte.MonCompte;
 import com.example.projetrecette.Drawer.SignUp.SignUpActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
     }
 
     @Override
@@ -91,18 +90,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent;
         switch(item.getItemId()){
             case R.id.navigation_login:
-                Intent intent = new Intent(this, LoginActivity.class);
+                intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;
             case R.id.navigation_signup:
-                Intent intent2 = new Intent(this, SignUpActivity.class);
-                startActivity(intent2);
+                intent = new Intent(this, SignUpActivity.class);
+                startActivity(intent);
                 break;
             case R.id.navigation_profil:
-                Intent intent3 = new Intent(this, MonCompte.class);
-                startActivity(intent3);
+                intent = new Intent(this, MonCompte.class);
+                startActivity(intent);
+                break;
+            case R.id.navigation_vos_recettes:
+                intent = new Intent(this, mesRecettesActivity.class);
+                startActivity(intent);
+                break;
             case R.id.navigation_signout:
                 FirebaseAuth.getInstance().signOut();
                 checkLogin();
@@ -140,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void retrieveData(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final StorageReference pathphoto = mStorageRef.child("Photo_de_Profil").child("laurent.jpg");
+
         String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final TextView email = (TextView) navigationView.getHeaderView(0).findViewById(R.id.drawer_email);
         final TextView fullname = (TextView) navigationView.getHeaderView(0).findViewById(R.id.drawer_fullname);
@@ -151,8 +156,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 email.setText(documentSnapshot.getString("Email"));
                 fullname.setText(documentSnapshot.getString("Fullname"));
                 final StorageReference pathphoto = mStorageRef.child("Photo_de_Profil").child(documentSnapshot.getString("Photo_de_Profile"));
+                /* Si problème rebuild le projet */
                 GlideApp.with(getApplicationContext()).load(pathphoto).into(photoProfil);
-
             }
         });
 
