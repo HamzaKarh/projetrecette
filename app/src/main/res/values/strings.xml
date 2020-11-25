@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjetRecette</string>
+    <string name="app_name">UQCOOK</string>
     <string name="title_home">Home</string>
     <string name="title_recipe">Recette</string>
     <string name="title_favorite">Favoris</string>
