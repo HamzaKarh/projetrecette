@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -37,10 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -59,16 +57,24 @@ public class newRecetteActivity extends AppCompatActivity {
     Uri ImageUri;
     CollectionReference crefRecipe;
 
+    Allergie allergie;
+    Button btn_gluten, btn_arachid, btn_lait, btn_crustace, btn_celeri, btn_fruit, btn_moutarde, btn_poisson;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_recette);
         addToolbar();
         setAttribut();
+        setbtnAllergie();
+        onclickAllergie();
         onclickCreateRecipe();
         selectImage();
 
     }
+
+
+
 
     public String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
@@ -86,7 +92,7 @@ public class newRecetteActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Toast.makeText(getApplicationContext(),"Sucess", Toast.LENGTH_SHORT).show();
-                    drefRecipe.update("Recipe_pic", fileReference.toString());
+                    drefRecipe.update("Recipe_Pic", fileReference.getName());
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -155,9 +161,11 @@ public class newRecetteActivity extends AppCompatActivity {
                 }
                 if(TextUtils.isEmpty(temps_cooking)){
                     temps_cooking = "0";
+
                 }
                 if (TextUtils.isEmpty(temps_prepation)){
                     temps_prepation = "0";
+
                 }
                 if(TextUtils.isEmpty(multi_ingredient)){
                     multi_ingredient = "L'auteur n'a pas donner d'ingrédient";
@@ -175,7 +183,9 @@ public class newRecetteActivity extends AppCompatActivity {
                 recipe.put("Temps_Cuisson", temps_cooking);
                 recipe.put("Ingredient", multi_ingredient);
                 recipe.put("Recette", multi_rec);
+                recipe.put("Difficulty", difficulty.getRating());
                 recipe.put("Recipe_Pic", "default_pic.png");
+                recipe.put("Allergies", allergie.sendMap());
                 crefRecipe.add(recipe).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -205,6 +215,112 @@ public class newRecetteActivity extends AppCompatActivity {
         fStore =FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
         storageReference = FirebaseStorage.getInstance().getReference();
+        allergie = new Allergie();
+    }
+
+    public void setbtnAllergie(){
+
+        btn_gluten = findViewById(R.id.creation_gluten);
+        btn_arachid  = findViewById(R.id.creation_arachide);
+        btn_lait = findViewById(R.id.creation_lait);
+        btn_crustace = findViewById(R.id.creation_crustace);
+        btn_celeri = findViewById(R.id.creation_celeri);
+        btn_fruit = findViewById(R.id.creation_fruitcoq);
+        btn_moutarde = findViewById(R.id.creation_moutarde);
+        btn_poisson = findViewById(R.id.creation_poisson);
+
+    }
+
+    public void onclickAllergie(){
+        btn_gluten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allergie.setGluten(!allergie.gluten);
+                if(allergie.gluten){
+                    btn_gluten.setBackgroundColor(Color.parseColor("#fce4ec"));
+                }else{
+                    btn_gluten.setBackgroundColor(Color.parseColor("#eeeeee"));
+                }
+            }
+        });
+        btn_arachid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allergie.setArachid(!allergie.arachid);
+                if(allergie.arachid){
+                    btn_arachid.setBackgroundColor(Color.parseColor("#fce4ec"));
+                }else{
+                    btn_arachid.setBackgroundColor(Color.parseColor("#eeeeee"));
+                }
+            }
+        });
+        btn_lait.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allergie.setLait(!allergie.lait);
+                if(allergie.lait){
+                    btn_lait.setBackgroundColor(Color.parseColor("#fce4ec"));
+                }else{
+                    btn_lait.setBackgroundColor(Color.parseColor("#eeeeee"));
+                }
+            }
+        });
+        btn_crustace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allergie.setCrustace(!allergie.crustace);
+                if(allergie.crustace){
+                    btn_crustace.setBackgroundColor(Color.parseColor("#fce4ec"));
+                }else{
+                    btn_crustace.setBackgroundColor(Color.parseColor("#eeeeee"));
+                }
+            }
+        });
+        btn_celeri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allergie.setCeleri(!allergie.celeri);
+                if(allergie.celeri){
+                    btn_celeri.setBackgroundColor(Color.parseColor("#fce4ec"));
+                }else{
+                    btn_celeri.setBackgroundColor(Color.parseColor("#eeeeee"));
+                }
+            }
+        });
+        btn_fruit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allergie.setFruitcoq(!allergie.fruitcoq);
+                if(allergie.fruitcoq){
+                    btn_fruit.setBackgroundColor(Color.parseColor("#fce4ec"));
+                }else{
+                    btn_fruit.setBackgroundColor(Color.parseColor("#eeeeee"));
+                }
+            }
+        });
+        btn_moutarde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allergie.setMoutarde(!allergie.moutarde);
+                if(allergie.moutarde){
+                    btn_moutarde.setBackgroundColor(Color.parseColor("#fce4ec"));
+                }else{
+                    btn_moutarde.setBackgroundColor(Color.parseColor("#eeeeee"));
+                }
+            }
+        });
+        btn_poisson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                allergie.setPoisson(!allergie.poisson);
+                if(allergie.poisson){
+                    btn_poisson.setBackgroundColor(Color.parseColor("#fce4ec"));
+                }else{
+                    btn_poisson.setBackgroundColor(Color.parseColor("#eeeeee"));
+                }
+            }
+        });
+
     }
 
 

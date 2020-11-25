@@ -65,7 +65,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Information"
+                        android:text="Informations"
                         android:textColor="@color/colorAccent"
                         android:textSize="22sp"
                         />
@@ -158,8 +158,6 @@
 
                 </LinearLayout>
 
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -211,8 +209,167 @@
                         android:layout_gravity="right"
                         android:gravity="top"
                         android:hint="Ecrire ici les étapes à la réalisation de votre recette.\nExemple : Etape 1 - Bouillir de l'eau"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Allergies"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="22sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/creation_gluten"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#eeeeee"
+                                android:text="Gluten"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/creation_arachide"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#eeeeee"
+                                android:text="Arachide"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_margin="3dp"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/creation_lait"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#eeeeee"
+                                android:text="Lait"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/creation_crustace"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Crustacé"
+                                android:background="#eeeeee"
+                                android:textSize="13sp"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_margin="3dp"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/creation_celeri"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Célèri"
+                                android:background="#eeeeee"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/creation_fruitcoq"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Fruits à Coque"
+                                android:background="#eeeeee"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/creation_poisson"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Poisson"
+                                android:background="#eeeeee"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/creation_moutarde"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Moutarde"
+                                android:background="#eeeeee"
+                                android:textSize="13sp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
+
+
 
                 <LinearLayout
                     android:id="@+id/creation_illustration"
@@ -248,6 +405,8 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+
 
                 <Button
                     android:id="@+id/btnCreationRecette"
