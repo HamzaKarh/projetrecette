@@ -1,6 +1,7 @@
 package com.example.projetrecette;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,7 +11,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     StorageReference mStorageRef;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -51,9 +55,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.navigationView);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
+
+
         Appbar();
         Drawer();
         checkLogin();
+
 
     }
 
@@ -145,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void retrieveData(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final TextView email = (TextView) navigationView.getHeaderView(0).findViewById(R.id.drawer_email);
         final TextView fullname = (TextView) navigationView.getHeaderView(0).findViewById(R.id.drawer_fullname);
@@ -160,14 +166,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 GlideApp.with(getApplicationContext()).load(pathphoto).into(photoProfil);
             }
         });
-
-
-
-
-
-
-
     }
+
+
+
+
+
 
 }
 
