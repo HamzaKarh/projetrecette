@@ -60,6 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 if(password.length() < 6){
                     uPassword.setError("Password must be > 6 characters");
+                    return;
                 }
                 fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -80,10 +81,14 @@ public class SignUpActivity extends AppCompatActivity {
     public void adddatatoFireBase(String email, String fullname){
         userId = fAuth.getCurrentUser().getUid();
         DocumentReference documentReference = fStore.collection("users").document(userId);
+        Map<String,String> mesrecettes = new HashMap<>();
+        Map<String,String> mesfavoris = new HashMap<>();
         Map<String,Object> user = new HashMap<>();
         user.put("Email", email);
         user.put("Fullname", fullname);
         user.put("Photo_de_Profile", "default_pic.png");
+        user.put("Mes_Recettes", mesrecettes);
+        user.put("Mes_Favoris", mesfavoris);
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
