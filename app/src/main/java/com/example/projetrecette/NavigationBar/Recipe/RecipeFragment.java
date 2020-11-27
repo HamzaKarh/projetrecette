@@ -12,21 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Toolbar;
 
-import com.example.projetrecette.MainActivity;
+import com.example.projetrecette.GlideApp;
 import com.example.projetrecette.R;
+import com.example.projetrecette.Recette.RecipeModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.CollectionReference;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import java.sql.Time;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,8 +52,9 @@ public class RecipeFragment extends Fragment {
     private RecyclerView mResultList;
 
     private FirestoreRecyclerAdapter adapter;
-    FirebaseFirestore mRecipeDatabase;
+    FirebaseFirestore fStore;
 
+    StorageReference mStorageRef;
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -83,47 +86,9 @@ public class RecipeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
-
-
     }
 
-    private void firebaseRecipeSearch(String s) {
 
-         CollectionReference ref = mRecipeDatabase.collection("recipes");
-         Query query = ref.whereEqualTo("Nom_Recette", s);
-
-        FirestoreRecyclerOptions<Recipe> options  = new FirestoreRecyclerOptions.Builder<Recipe>()
-                .setQuery(query, Recipe.class).build();
-
-
-        adapter = new FirestoreRecyclerAdapter<Recipe, RecipeViewHolder>(options) {
-
-            @NonNull
-            @Override
-            public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_layout, parent, false);
-                return new RecipeViewHolder(view);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull RecipeViewHolder holder, int position, @NonNull Recipe model) {
-                holder.mAuthor.setText(model.getName());
-                holder.mName.setText(model.getName());
-                holder.mRating.setText(model.getRating());
-                holder.mTime.setText(model.getTime());
-            }
-        };
-
-        adapter.startListening();
-
-        mResultList.setHasFixedSize(true);
-        mResultList.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        mResultList.setAdapter(adapter);
-
-
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -133,14 +98,17 @@ public class RecipeFragment extends Fragment {
                 mSearchField = view.findViewById(R.id.search_recipe);
         mSearchBtn = view.findViewById(R.id.search_button);
 
-        mRecipeDatabase = FirebaseFirestore.getInstance();
+        setAttribut(view);
+
+        fStore = FirebaseFirestore.getInstance();
         mResultList = view.findViewById(R.id.result_list);
 
         mSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                firebaseRecipeSearch(mSearchField.getText().toString());
-
+                //firebaseRecipeSearch(mSearchField.getText().toString());
+                getQuery(mSearchField.getText().toString());
+                adapter.startListening();
             }
         });
 
@@ -153,32 +121,99 @@ public class RecipeFragment extends Fragment {
     }
 
 
-    public class RecipeViewHolder extends RecyclerView.ViewHolder{
-        public RelativeLayout root;
-        public RecipeViewHolder(@NonNull View itemView) {
+    private class RecipeModelViewHolder extends RecyclerView.ViewHolder{
+
+        TextView name, author, cookingtime;
+        RatingBar rating;
+        ImageView image;
+
+
+
+        public RecipeModelViewHolder(@NonNull View itemView){
             super(itemView);
+            this.name = itemView.findViewById(R.id.recipe_name);
+            this.author = itemView.findViewById(R.id.recipe_author);
+            this.cookingtime = itemView.findViewById(R.id.recipe_time);
+            this.rating = itemView.findViewById(R.id.recipe_rating);
+            this.image = itemView.findViewById(R.id.recipe_image);
+        }
 
-            root = itemView.findViewById(R.id.list_layout);
-            mAuthor = itemView.findViewById(R.id.recipe_author);
-            mName = itemView.findViewById(R.id.recipe_name);
-            mTime = itemView.findViewById(R.id.recipe_time);
-            mRating = itemView.findViewById(R.id.recipe_rating);
+        public void setRecipe(RecipeModel recipe){
+            String temps = "Temps : " + recipe.getTemps_Cuisson() + " minutes";
+            this.name.setText(recipe.getNom_Recette());
+            this.cookingtime.setText(temps);
+            this.rating.setRating(Float.parseFloat(recipe.getRating()));
 
+            final TextView aut = this.author;
+            final ImageView img = this.image;
+            fStore = FirebaseFirestore.getInstance();
+            fStore.collection("users").document(recipe.getAuteur()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String auteur = "Par " + documentSnapshot.getString("Fullname");
+                    aut.setText(auteur);
+                }
+            });
+            fStore.collection("recipes").document(recipe.getRecipe_id()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    final StorageReference pathphoto1 = mStorageRef.child("Recipes_pics").child(documentSnapshot.getString("Recipe_Pic"));
+                    /* Si problème rebuild le projet */
+                    GlideApp.with(getActivity().getApplicationContext()).load(pathphoto1).into(img);
+                }
+            });
 
         }
 
+    }
 
 
-        public TextView mAuthor, mName, mTime, mRating, mCookingTime, mRecipe, mIngredients;
 
 
+    public void setAttribut(View v ){
+        fStore = FirebaseFirestore.getInstance();
+        mResultList = v.findViewById(R.id.recycler_view);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
     }
+
+
+
+    private void setSupportActionBar(Toolbar toolbar) {
+    }
+
+
+
+
+
+    public void getQuery(String s){
+        Query query = fStore.collection("recipes").whereEqualTo("Nom_Recette", s);
+        FirestoreRecyclerOptions<RecipeModel> options = new FirestoreRecyclerOptions.Builder<RecipeModel>().setQuery(query, RecipeModel.class).build();
+        adapter = new FirestoreRecyclerAdapter<RecipeModel, RecipeModelViewHolder>(options) {
+
+            @NonNull
+            @Override
+            public RecipeModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item_recipe, parent, false);
+                return new RecipeModelViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull RecipeModelViewHolder holder, int position, @NonNull RecipeModel model) {
+                holder.setRecipe(model);
+            }
+        };
+
+        mResultList.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mResultList.setAdapter(adapter);
+    }
+
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
-
+        if (adapter != null){
+            adapter.stopListening();
+        }
     }
 
     @Override
