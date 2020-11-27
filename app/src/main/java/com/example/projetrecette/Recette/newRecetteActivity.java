@@ -161,8 +161,8 @@ public class newRecetteActivity extends AppCompatActivity {
                 }
                 if(TextUtils.isEmpty(temps_cooking)){
                     temps_cooking = "0";
-
                 }
+
                 if (TextUtils.isEmpty(temps_prepation)){
                     temps_prepation = "0";
 
@@ -184,6 +184,7 @@ public class newRecetteActivity extends AppCompatActivity {
                 recipe.put("Ingredient", multi_ingredient);
                 recipe.put("Recette", multi_rec);
                 recipe.put("Difficulty", difficulty.getRating());
+                recipe.put("Rating", "0");
                 recipe.put("Recipe_Pic", "default_pic.png");
                 recipe.put("Allergies", allergie.sendMap());
                 crefRecipe.add(recipe).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -192,6 +193,7 @@ public class newRecetteActivity extends AppCompatActivity {
                         recipeId = documentReference.getId();
                         drefRecipe = fStore.collection("recipes").document(recipeId);
                         drefUser.update("Mes_Recettes", FieldValue.arrayUnion(recipeId));
+                        drefRecipe.update("Recipe_id", recipeId);
                         uploadFile();
                         Toast.makeText(getApplicationContext(), "Sucess Firebase", Toast.LENGTH_SHORT).show();
                     }
