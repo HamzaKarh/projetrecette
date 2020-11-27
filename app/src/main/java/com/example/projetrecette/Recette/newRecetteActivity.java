@@ -91,6 +91,7 @@ public class newRecetteActivity extends AppCompatActivity {
             mUploadTask = fileReference.putFile(ImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                     Toast.makeText(getApplicationContext(),"Sucess", Toast.LENGTH_SHORT).show();
                     drefRecipe.update("Recipe_Pic", fileReference.getName());
                 }
@@ -186,15 +187,21 @@ public class newRecetteActivity extends AppCompatActivity {
                 recipe.put("Difficulty", difficulty.getRating());
                 recipe.put("Rating", "0");
                 recipe.put("Recipe_Pic", "default_pic.png");
+                recipe.put("Recipe_id","placeholder");
                 recipe.put("Allergies", allergie.sendMap());
+
                 crefRecipe.add(recipe).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         recipeId = documentReference.getId();
                         drefRecipe = fStore.collection("recipes").document(recipeId);
-                        drefUser.update("Mes_Recettes", FieldValue.arrayUnion(recipeId));
-                        drefRecipe.update("Recipe_id", recipeId);
-                        uploadFile();
+                        drefUser.update("Mes_Recettes", FieldValue.arrayUnion(recipeId)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getApplicationContext(), "Sucess Firebase", Toast.LENGTH_SHORT).show();
+                                uploadFile();
+                            }
+                        });
                         Toast.makeText(getApplicationContext(), "Sucess Firebase", Toast.LENGTH_SHORT).show();
                     }
                 });

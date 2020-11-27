@@ -95,7 +95,7 @@ public class RecipeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
-                mSearchField = view.findViewById(R.id.search_recipe);
+        mSearchField = view.findViewById(R.id.search_recipe);
         mSearchBtn = view.findViewById(R.id.search_button);
 
         setAttribut(view);
@@ -154,6 +154,7 @@ public class RecipeFragment extends Fragment {
                     aut.setText(auteur);
                 }
             });
+            if(!recipe.getRecipe_id().equals("placeholder"))
             fStore.collection("recipes").document(recipe.getRecipe_id()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {

@@ -114,6 +114,8 @@ public class mesRecettesActivity extends AppCompatActivity {
 
             final TextView aut = this.author;
             final ImageView img = this.image;
+
+            /*Get Username*/
             fStore = FirebaseFirestore.getInstance();
             fStore.collection("users").document(recipe.getAuteur()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -122,15 +124,18 @@ public class mesRecettesActivity extends AppCompatActivity {
                     aut.setText(auteur);
                 }
             });
-            fStore.collection("recipes").document(recipe.getRecipe_id()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    final StorageReference pathphoto1 = mStorageRef.child("Recipes_pics").child(documentSnapshot.getString("Recipe_Pic"));
-                    /* Si problème rebuild le projet */
-                    GlideApp.with(getApplicationContext()).load(pathphoto1).into(img);
-                }
-            });
 
+            /*Get Photo*/
+            if(recipe.getRecipe_id().equals("placeholder") == false){
+                fStore.collection("recipes").document(recipe.getRecipe_id()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        final StorageReference pathphoto1 = mStorageRef.child("Recipes_pics").child(documentSnapshot.getString("Recipe_Pic"));
+                        /* Si problème rebuild le projet */
+                        GlideApp.with(getApplicationContext()).load(pathphoto1).into(img);
+                    }
+                });
+            }
         }
 
     }
