@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Drawer.MonCompte.MonCompte"></activity>
-        <activity android:name=".Drawer.SignUp.SignUpActivity" />
-        <activity android:name=".Drawer.Login.LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.projetrecette.Drawer.MonCompte.MonCompte"/>
+        <activity android:name="com.example.projetrecette.Drawer.MonCompte.ChangeEmail"/>
+        <activity android:name="com.example.projetrecette.Drawer.SignUp.SignUpActivity" />
+        <activity android:name="com.example.projetrecette.Drawer.Login.LoginActivity" />
+        <activity android:name="com.example.projetrecette.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -27,6 +27,12 @@
 
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,38 +65,86 @@
                 android:orientation="vertical">
 
             <TextView
-                android:id="@id/drawer_fullname"
+                android:id="@+id/account_fullname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
-                android:text="Pseudo"
                 android:textSize="18sp"
-                android:maxLines="1" />
-
-            <TextView
-                android:id="@id/drawer_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="mail@adresse.com"
                 android:maxLines="1"
-                android:textSize="18sp"/>
+                android:text="Nom et Prénom"/>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <!--android:gravity="right"-->
+
+
+                        <TextView
+                            android:id="@+id/account_email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="mail@adresse.com"
+                            android:maxLines="1"
+                            android:textSize="18sp"
+                            android:layout_gravity="center_horizontal"/>
+
+                        <TextView
+                            android:id="@+id/change_password"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Changer de Mot de Passe"
+                            android:textSize="18sp"
+                            android:layout_gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+                    <!--
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:layout_weight="2.2">
+
+                            <Button
+                                android:id="@+id/edit_button"
+                                android:layout_width="57dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:background="@mipmap/ic_launcher_edit_24_round"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white" />
+
+                    </LinearLayout>
+                    -->
+                </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="Information sur le compte"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Information sur le compte"/>
+        </LinearLayout>
     </LinearLayout>
 
     </LinearLayout>

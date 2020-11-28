@@ -14,11 +14,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.projetrecette.GlideApp;
+import com.example.projetrecette.MainActivity;
 import com.example.projetrecette.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +43,8 @@ public class MonCompte extends AppCompatActivity {
     NavigationView navigationView;
     private static final int GALLERY_REQUEST_CODE = 123;
     ImageView ProfilPicture;
+    //Button edit;
+    TextView fullname, email;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, pictureDeleted;
@@ -56,6 +61,7 @@ public class MonCompte extends AppCompatActivity {
         setAttribut();
         setProfilPicture();
         selectImage();
+        onEmailClicked();
 
 
 
@@ -75,12 +81,27 @@ public class MonCompte extends AppCompatActivity {
     }
 
 
+    public void onEmailClicked(){
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MonCompte.this,ChangeEmail.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
     public void setProfilPicture(){
         drefProfil.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 final StorageReference pathphoto = storageReference.child("Photo_de_Profil").child(documentSnapshot.getString("Photo_de_Profile"));
                 GlideApp.with(getApplicationContext()).load(pathphoto).into(ProfilPicture);
+                //GlideApp.with(getApplicationContext()).load(pathphoto).into(email);
+                email.setText(documentSnapshot.getString("Email"));
+                fullname.setText(documentSnapshot.getString("Fullname"));
+
             }
         });
     }
@@ -143,7 +164,6 @@ public class MonCompte extends AppCompatActivity {
                     drefProfil.update("Photo_de_Profile", fileReference.getName());
                     deleteFormerPicture();
                     Toast.makeText(getApplicationContext(),"Changement réussis", Toast.LENGTH_SHORT).show();
-
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -177,6 +197,8 @@ public class MonCompte extends AppCompatActivity {
                             startActivityForResult(intent, GALLERY_REQUEST_CODE);
                         } else if(options[item].equals("Retirer la photo de profil")){
                             drefProfil.update("Photo_de_Profile", "default_pic.png");
+                            final StorageReference pathphoto = storageReference.child("Photo_de_Profil").child("default_pic.png");
+                            GlideApp.with(getApplicationContext()).load(pathphoto).into(ProfilPicture);
                             deleteFormerPicture();
                             Toast.makeText(getApplicationContext(),"changement réussis", Toast.LENGTH_SHORT).show();
                         } else if (options[item].equals("Annuler")) {
@@ -207,6 +229,11 @@ public class MonCompte extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         ProfilPicture = findViewById(R.id.photoProfile);
         navigationView = findViewById(R.id.navigationView);
+        fullname = findViewById(R.id.account_fullname);
+        email = findViewById(R.id.account_email);
+        //edit = findViewById(R.id.edit_button);
+        //Utiliser ces méthodes pour changer el mot de pass, ou le mail,
+        //fAuth.getCurrentUser(userId).updatePassword()
     }
 
 
