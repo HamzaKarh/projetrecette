@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Recette.editRecetteActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/gradient"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="40dp">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Editer votre Recette"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="26sp" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_information"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Informations"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="22sp"
+                        />
+
+
+
+                    <EditText
+                        android:id="@+id/edit_name"
+                        android:layout_width="280dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="10dp"
+                        android:hint="Nom de la Recette"
+                        android:inputType="textPersonName" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Difficulté : "
+                            android:textSize="18sp"
+                            android:layout_gravity="center"
+                            />
+
+                        <RatingBar
+                            android:id="@+id/edit_difficulty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:max="5"
+                            android:scaleX=".7"
+                            android:scaleY=".7"
+                            android:numStars="5"
+                            android:progressBackgroundTint="#ffcdd2"
+                            android:progressTint="#ff6e60"
+                            android:saveEnabled="true" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Temps de préparation :"
+                            android:textSize="18sp"
+                            android:layout_gravity="center"/>
+
+
+                        <EditText
+                            android:id="@+id/edit_preparation"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:hint="Minute"
+                            android:inputType="number"
+                            android:layout_marginLeft="20dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Temps de cuisson :"
+                            android:textSize="18sp"
+                            android:layout_gravity="center"/>
+
+
+                        <EditText
+                            android:id="@+id/edit_cooking"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="20dp"
+                            android:hint="Minute"
+                            android:inputType="number" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ingrédients"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="22sp"
+                        />
+
+                    <EditText
+                        android:id="@+id/edit_ingredient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:minLines="4"
+                        android:scrollbars="vertical"
+                        android:layout_gravity="right"
+                        android:gravity="top"
+                        android:hint="Ecrire ici les ingrédients nécéssaire pour votre recette...\nExemple : x9 Tomates"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Recette"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="22sp"
+                        />
+
+                    <EditText
+                        android:id="@+id/edit_recette"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:minLines="4"
+                        android:scrollbars="vertical"
+                        android:layout_gravity="right"
+                        android:gravity="top"
+                        android:hint="Ecrire ici les étapes à la réalisation de votre recette.\nExemple : Etape 1 - Bouillir de l'eau"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Allergies"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="22sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/edit_gluten"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#eeeeee"
+                                android:text="Gluten"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/edit_arachide"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#eeeeee"
+                                android:text="Arachide"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_margin="3dp"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/edit_lait"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#eeeeee"
+                                android:text="Lait"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/edit_crustace"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Crustacé"
+                                android:background="#eeeeee"
+                                android:textSize="13sp"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_margin="3dp"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/edit_celeri"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Célèri"
+                                android:background="#eeeeee"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/edit_fruitcoq"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Fruits à Coque"
+                                android:background="#eeeeee"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/edit_poisson"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Poisson"
+                                android:background="#eeeeee"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/edit_moutarde"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Moutarde"
+                                android:background="#eeeeee"
+                                android:textSize="13sp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:id="@+id/edit_illustration"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Image pour illustrer votre recette"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="22sp"
+                        />
+
+                    <LinearLayout
+
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginHorizontal="50dp"
+                        android:layout_marginVertical="10dp">
+
+                        <ImageView
+                            android:id="@+id/edit_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_baseline_add_circle_24">
+
+                        </ImageView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <Button
+                    android:id="@+id/btnEditRecette"
+                    android:layout_margin="20dp"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/gradient"
+                    android:text="Editer la recette"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
+
+
+
+
+
+
+
+
+            </LinearLayout>
+
+
+
+
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
+
+
+
+
+
+
