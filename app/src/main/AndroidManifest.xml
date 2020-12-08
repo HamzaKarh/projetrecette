@@ -17,6 +17,9 @@
         <activity android:name=".Drawer.MonCompte.MonCompte" />
         <activity android:name=".Drawer.SignUp.SignUpActivity" />
         <activity android:name=".Drawer.Login.LoginActivity" />
+        <activity android:name=".Recette.AffichageRecette" />
+        <activity android:name=".Recette.editRecetteActivity" />
+
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
