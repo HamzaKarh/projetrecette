@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.projetrecette.GlideApp;
 import com.example.projetrecette.R;
+import com.example.projetrecette.Recette.AffichageRecette;
 import com.example.projetrecette.Recette.RecipeModel;
 import com.example.projetrecette.Recette.newRecetteActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -67,7 +68,7 @@ public class mesRecettesActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull RecipeModelViewHolder holder, int position, @NonNull RecipeModel model) {
+            protected void onBindViewHolder(@NonNull RecipeModelViewHolder holder, final int position, @NonNull final RecipeModel model) {
                 holder.setRecipe(model);
             }
         };
@@ -89,11 +90,12 @@ public class mesRecettesActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-    private class RecipeModelViewHolder extends RecyclerView.ViewHolder{
+    private class RecipeModelViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView name, author, cookingtime;
         RatingBar rating;
         ImageView image;
+        String recipeid;
 
 
 
@@ -104,13 +106,18 @@ public class mesRecettesActivity extends AppCompatActivity {
             this.cookingtime = itemView.findViewById(R.id.recipe_time);
             this.rating = itemView.findViewById(R.id.recipe_rating);
             this.image = itemView.findViewById(R.id.recipe_image);
+            itemView.setOnClickListener(this);
+
         }
+
+
 
         public void setRecipe(RecipeModel recipe){
             String temps = "Temps : " + recipe.getTemps_Cuisson() + " minutes";
             this.name.setText(recipe.getNom_Recette());
             this.cookingtime.setText(temps);
             this.rating.setRating(Float.parseFloat(recipe.getRating()));
+            this.recipeid = recipe.getRecipe_id();
 
             final TextView aut = this.author;
             final ImageView img = this.image;
@@ -138,6 +145,12 @@ public class mesRecettesActivity extends AppCompatActivity {
             }
         }
 
+        @Override
+        public void onClick(View view) {
+            Intent i = new Intent(getApplicationContext(), AffichageRecette.class);
+            i.putExtra("key", recipeid);
+            startActivity(i);
+        }
     }
 
 

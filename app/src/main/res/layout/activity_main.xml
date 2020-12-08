@@ -35,6 +35,7 @@
         tools:layout_editor_absoluteX="-71dp"
         tools:layout_editor_absoluteY="0dp" />
 
+
     <fragment
         android:id="@+id/MainFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -42,6 +43,8 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/navigation_menu"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="?attr/actionBarSize"
         tools:layout_editor_absoluteX="-10dp"
         tools:layout_editor_absoluteY="-17dp" />
 

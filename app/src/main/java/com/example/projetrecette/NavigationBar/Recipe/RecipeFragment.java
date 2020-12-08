@@ -170,17 +170,11 @@ public class RecipeFragment extends Fragment {
 
 
 
-
     public void setAttribut(View v ){
         fStore = FirebaseFirestore.getInstance();
         mResultList = v.findViewById(R.id.recycler_view);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-    }
-
-
-
-    private void setSupportActionBar(Toolbar toolbar) {
     }
 
 

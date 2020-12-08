@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -53,9 +54,9 @@ public class newRecetteActivity extends AppCompatActivity {
     String userId, recipeId, uploadId;
     StorageReference storageReference;
     StorageTask mUploadTask;
-    DocumentReference drefRecipe;
     Uri ImageUri;
     CollectionReference crefRecipe;
+    DocumentReference drefRecipe;
 
     Allergie allergie;
     Button btn_gluten, btn_arachid, btn_lait, btn_crustace, btn_celeri, btn_fruit, btn_moutarde, btn_poisson;
@@ -82,18 +83,17 @@ public class newRecetteActivity extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    private void uploadFile() {
+    private void uploadFile(final String recipeId) {
         if (ImageUri != null) {
             /* On utilise UUID pour obtenir une id random */
             final StorageReference fileReference = storageReference.child("Recipes_pics").child(UUID.randomUUID().toString()
             + "." + getFileExtension(ImageUri));
 
+            final DocumentReference drefRecipes = fStore.collection("recipes").document(recipeId);
             mUploadTask = fileReference.putFile(ImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                    Toast.makeText(getApplicationContext(),"Sucess", Toast.LENGTH_SHORT).show();
-                    drefRecipe.update("Recipe_Pic", fileReference.getName());
+                    drefRecipes.update("Recipe_Pic", fileReference.getName());
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -153,8 +153,8 @@ public class newRecetteActivity extends AppCompatActivity {
                 String name = name_recette.getText().toString().trim();
                 String temps_prepation = temps_prep.getText().toString().trim();
                 String temps_cooking = temps_cook.getText().toString().trim();
-                String multi_ingredient = multi_ingre.getText().toString().trim();
-                String multi_rec = multi_recette.getText().toString().trim();
+                String multi_ingredient = Html.toHtml(multi_ingre.getText());
+                String multi_rec =Html.toHtml(multi_recette.getText());
 
                 if(TextUtils.isEmpty(name)){
                     name_recette.setError("Veuillez mettre un nom de recette valide!");
@@ -184,7 +184,7 @@ public class newRecetteActivity extends AppCompatActivity {
                 recipe.put("Temps_Cuisson", temps_cooking);
                 recipe.put("Ingredient", multi_ingredient);
                 recipe.put("Recette", multi_rec);
-                recipe.put("Difficulty", difficulty.getRating());
+                recipe.put("Difficulty", String.valueOf(difficulty.getRating()));
                 recipe.put("Rating", "0");
                 recipe.put("Recipe_Pic", "default_pic.png");
                 recipe.put("Recipe_id","placeholder");
@@ -194,15 +194,10 @@ public class newRecetteActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         recipeId = documentReference.getId();
-                        drefRecipe = fStore.collection("recipes").document(recipeId);
-                        drefUser.update("Mes_Recettes", FieldValue.arrayUnion(recipeId)).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(getApplicationContext(), "Sucess Firebase", Toast.LENGTH_SHORT).show();
-                                uploadFile();
-                            }
-                        });
-                        Toast.makeText(getApplicationContext(), "Sucess Firebase", Toast.LENGTH_SHORT).show();
+                        drefUser.update("Mes_Recettes", FieldValue.arrayUnion(recipeId));
+                        final DocumentReference drefRecipe = fStore.collection("recipes").document(recipeId);
+                        drefRecipe.update("Recipe_id", recipeId);
+                        uploadFile(recipeId);
                     }
                 });
                 onBackPressed();
