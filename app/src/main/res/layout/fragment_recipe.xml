@@ -16,51 +16,90 @@
             android:layout_height="match_parent"
             android:layout_weight="3">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="15dp">
 
-                <TextView
-                    android:id="@+id/header_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="50dp"
-                    android:fontFamily="@font/nunito_bold"
-                    android:text="Search for a recipe"
-                    android:textColor="#555555"
-                    android:textSize="30sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
-                <EditText
-                    android:id="@+id/search_recipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/header_text"
-                    android:layout_alignStart="@id/header_text"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/search_outline"
-                    android:ems="10"
-                    android:fontFamily="@font/nunito_bold"
-                    android:inputType="textPersonName"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="20dp"
-                    android:paddingBottom="10dp"
-                    android:text=""
-                    android:textColor="#999999"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/header_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/nunito_bold"
+                        android:gravity="center"
+                        android:text="Rechercher une Recette"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="22sp" />
 
-                <ImageButton
-                    android:id="@+id/search_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/search_recipe"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/search_recipe"
-                    android:backgroundTint="@color/common_google_signin_btn_tint"
-                    android:src="@drawable/ic_baseline_search_24" />
+                </LinearLayout>
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/search_recipe"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/header_text"
+                            android:layout_alignStart="@id/header_text"
+                            android:background="@drawable/search_outline"
+                            android:layout_gravity="center"
+                            android:ems="10"
+                            android:fontFamily="@font/nunito_bold"
+                            android:inputType="textPersonName"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="20dp"
+                            android:paddingBottom="10dp"
+                            android:text=""
+                            android:textColor="#999999"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5">
+
+                        <ImageButton
+                            android:id="@+id/search_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="62dp"
+                            android:layout_gravity="center"
+
+
+                            android:backgroundTint="@color/common_google_signin_btn_tint"
+                            android:src="@drawable/ic_baseline_search_24" />
+
+                    </LinearLayout>
+
+
+
+
+
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
 
 
 
