@@ -1,5 +1,7 @@
 package com.example.projetrecette.NavigationBar.Recipe;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,6 +23,7 @@ import android.widget.Toolbar;
 
 import com.example.projetrecette.GlideApp;
 import com.example.projetrecette.R;
+import com.example.projetrecette.Recette.AffichageRecette;
 import com.example.projetrecette.Recette.RecipeModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -29,6 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -109,6 +115,27 @@ public class RecipeFragment extends Fragment {
                 //firebaseRecipeSearch(mSearchField.getText().toString());
                 getQuery(mSearchField.getText().toString());
                 adapter.startListening();
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        });
+
+        mSearchField.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(keyEvent.getAction() == KeyEvent.ACTION_DOWN){
+                    switch(i){
+                        case KeyEvent.KEYCODE_ENTER:
+                            getQuery(mSearchField.getText().toString());
+                            adapter.startListening();
+                            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
             }
         });
 
@@ -121,11 +148,12 @@ public class RecipeFragment extends Fragment {
     }
 
 
-    private class RecipeModelViewHolder extends RecyclerView.ViewHolder{
+    private class RecipeModelViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView name, author, cookingtime;
         RatingBar rating;
         ImageView image;
+        String recipeid;
 
 
 
@@ -133,19 +161,23 @@ public class RecipeFragment extends Fragment {
             super(itemView);
             this.name = itemView.findViewById(R.id.recipe_name);
             this.author = itemView.findViewById(R.id.recipe_author);
-            this.cookingtime = itemView.findViewById(R.id.recipe_time);
             this.rating = itemView.findViewById(R.id.recipe_rating);
             this.image = itemView.findViewById(R.id.recipe_image);
+            itemView.setOnClickListener(this);
+
         }
 
+
+
         public void setRecipe(RecipeModel recipe){
-            String temps = "Temps : " + recipe.getTemps_Cuisson() + " minutes";
             this.name.setText(recipe.getNom_Recette());
-            this.cookingtime.setText(temps);
             this.rating.setRating(Float.parseFloat(recipe.getRating()));
+            this.recipeid = recipe.getRecipe_id();
 
             final TextView aut = this.author;
             final ImageView img = this.image;
+
+            /*Get Username*/
             fStore = FirebaseFirestore.getInstance();
             fStore.collection("users").document(recipe.getAuteur()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -154,18 +186,26 @@ public class RecipeFragment extends Fragment {
                     aut.setText(auteur);
                 }
             });
-            if(!recipe.getRecipe_id().equals("placeholder"))
-            fStore.collection("recipes").document(recipe.getRecipe_id()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    final StorageReference pathphoto1 = mStorageRef.child("Recipes_pics").child(documentSnapshot.getString("Recipe_Pic"));
-                    /* Si problème rebuild le projet */
-                    GlideApp.with(getActivity().getApplicationContext()).load(pathphoto1).into(img);
-                }
-            });
 
+            /*Get Photo*/
+            if(recipe.getRecipe_id().equals("placeholder") == false){
+                fStore.collection("recipes").document(recipe.getRecipe_id()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        final StorageReference pathphoto1 = mStorageRef.child("Recipes_pics").child(documentSnapshot.getString("Recipe_Pic"));
+                        /* Si problème rebuild le projet */
+                        GlideApp.with(getActivity().getApplicationContext()).load(pathphoto1).into(img);
+                    }
+                });
+            }
         }
 
+        @Override
+        public void onClick(View view) {
+            Intent i = new Intent(getActivity().getApplicationContext(), AffichageRecette.class);
+            i.putExtra("key", recipeid);
+            startActivity(i);
+        }
     }
 
 
