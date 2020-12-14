@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.example.projetrecette.Drawer.MesRecettes.mesRecettesActivity;
 import com.example.projetrecette.GlideApp;
 import com.example.projetrecette.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +37,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -47,11 +49,11 @@ public class editRecetteActivity extends AppCompatActivity {
     EditText name_recette, temps_prep, temps_cook, multi_ingre, multi_recette;
     RatingBar difficulty;
     ImageView image;
-    Button btnEditRecipe;
+    Button btnEditRecipe, btnDeleteRecipe;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String RecipeId;
-    String userId, recipeId, uploadId;
+    String userId;
     String previousImage;
     StorageReference storageReference;
     StorageTask mUploadTask;
@@ -69,7 +71,38 @@ public class editRecetteActivity extends AppCompatActivity {
         initialisation();
         selectImage();
         onClickEdit();
+        onClickDelete();
     }
+
+
+    public void onClickDelete(){
+        this.btnDeleteRecipe = findViewById(R.id.btnDelRecette);
+
+        btnDeleteRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fStore.collection("recipes").document(RecipeId).delete();
+                if(!previousImage.equals("default_pic.png")){
+                    storageReference.child("Recipes_pics").child(previousImage).delete();
+                }
+                fStore.collection("users").document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        ArrayList<String> o = (ArrayList<String>) documentSnapshot.getData().get("Mes_Recettes");
+                        o.remove(RecipeId);
+                        fStore.collection("users").document(userId).update("Mes_Recettes", o);
+                    }
+                });
+
+
+                Intent i = new Intent(editRecetteActivity.this, mesRecettesActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
+
+    }
+
 
     public void onClickEdit(){
 
@@ -141,35 +174,35 @@ public class editRecetteActivity extends AppCompatActivity {
     }
 
     public void btnAllergieMap(Map<String, Boolean> map){
-        if(map.get("Arachid")){
+        if(map.get("arachid")){
             allergie.arachid = true;
             btn_arachid.setBackgroundColor(Color.parseColor("#fce4ec"));
         }
-        if(map.get("Crustacé")){
+        if(map.get("crustace")){
             allergie.crustace = true;
             btn_crustace.setBackgroundColor(Color.parseColor("#fce4ec"));
         }
-        if(map.get("Céléri")){
+        if(map.get("celeri")){
             allergie.celeri = true;
             btn_celeri.setBackgroundColor(Color.parseColor("#fce4ec"));
         }
-        if(map.get("Fruit_à_Coq")){
+        if(map.get("fruitcoq")){
             allergie.fruitcoq = true;
             btn_fruit.setBackgroundColor(Color.parseColor("#fce4ec"));
         }
-        if(map.get("Gluten")){
+        if(map.get("gluten")){
             allergie.gluten = true;
             btn_gluten.setBackgroundColor(Color.parseColor("#fce4ec"));
         }
-        if(map.get("Lait")){
+        if(map.get("lait")){
             allergie.lait = true;
             btn_lait.setBackgroundColor(Color.parseColor("#fce4ec"));
         }
-        if(map.get("Moutarde")){
+        if(map.get("moutarde")){
             allergie.moutarde = true;
             btn_moutarde.setBackgroundColor(Color.parseColor("#fce4ec"));
         }
-        if(map.get("Poisson")){
+        if(map.get("poisson")){
             allergie.poisson = true;
             btn_poisson.setBackgroundColor(Color.parseColor("#fce4ec"));
         }

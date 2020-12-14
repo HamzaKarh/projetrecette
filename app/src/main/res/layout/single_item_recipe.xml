@@ -3,63 +3,231 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginVertical="5dp">
 
-    <RelativeLayout
-        android:id="@+id/recycler_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="10dp">
+        android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/recipe_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginRight="20dp"
-            tools:srcCompat="@tools:sample/avatars" />
+        <RelativeLayout
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
-        <TextView
-            android:id="@+id/recipe_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/recipe_image"
-            android:text="Recipe name"
-            android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/recipe_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginRight="20dp"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/recipe_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recipe_name"
-            android:layout_toRightOf="@id/recipe_image"
-            android:text="Recipe author" />
+            <TextView
+                android:id="@+id/recipe_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/recipe_image"
+                android:text="Recipe name"
+                android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/recipe_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/recipe_image"
-            android:layout_toRightOf="@id/recipe_image"
-            android:text="Cooking time" />
+            <TextView
+                android:id="@+id/recipe_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recipe_name"
+                android:layout_toRightOf="@id/recipe_image"
+                android:text="Recipe author" />
 
-        <RatingBar
-            android:id="@+id/recipe_rating"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/recipe_image"
-            android:layout_alignParentEnd="true"
-            android:isIndicator="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginBottom="2dp"
-            android:max="5"
-            android:numStars="5"
-            android:scaleX="1.10"
-            android:scaleY="1.10"
-            android:text="Rating" />
+            <RatingBar
+                android:id="@+id/recipe_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/recipe_image"
 
-    </RelativeLayout>
+
+                android:layout_toEndOf="@+id/recipe_image"
+                android:isIndicator="true"
+                android:max="5"
+                android:numStars="5"
+                android:scaleX="1.10"
+                android:scaleY="1.10"
+                android:text="Rating" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_gluten"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="G"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_arachid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="A"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_lait"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="L"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_crustace"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="CR"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible">
+                </TextView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_celeri"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="CE"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible">
+                </TextView>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_fruit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="F"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_poisson"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="P"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible">
+                </TextView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/item_moutarde"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="M"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible">
+                </TextView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
 </LinearLayout>

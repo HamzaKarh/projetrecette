@@ -36,9 +36,9 @@
             android:icon="@drawable/ic_baseline_book_24"
             android:title="@string/title_vos_recettes" />
         <item
-            android:id="@+id/navigation_parametres"
-            android:icon="@drawable/ic_baseline_settings_24"
-            android:title="@string/title_parametres" />
+            android:id="@+id/navigation_aides"
+            android:icon="@drawable/ic_baseline_help_24"
+            android:title="@string/aides" />
         <item
             android:id="@+id/navigation_signout"
             android:icon="@drawable/ic_baseline_exit_to_app_24"

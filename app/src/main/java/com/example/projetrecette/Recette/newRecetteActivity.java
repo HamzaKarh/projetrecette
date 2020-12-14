@@ -177,6 +177,8 @@ public class newRecetteActivity extends AppCompatActivity {
 
                 final DocumentReference drefUser = fStore.collection("users").document(userId);
                 crefRecipe = fStore.collection("recipes");
+                Map<String, String> userrating = new HashMap<>();
+                userrating.put("empty", "empty");
                 Map<String,Object> recipe = new HashMap<>();
                 recipe.put("Auteur", userId);
                 recipe.put("Nom_Recette", name);
@@ -186,9 +188,11 @@ public class newRecetteActivity extends AppCompatActivity {
                 recipe.put("Recette", multi_rec);
                 recipe.put("Difficulty", String.valueOf(difficulty.getRating()));
                 recipe.put("Rating", "0");
+                recipe.put("UserRating", userrating);
                 recipe.put("Recipe_Pic", "default_pic.png");
                 recipe.put("Recipe_id","placeholder");
                 recipe.put("Allergies", allergie.sendMap());
+                recipe.put("Click", 0);
 
                 crefRecipe.add(recipe).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

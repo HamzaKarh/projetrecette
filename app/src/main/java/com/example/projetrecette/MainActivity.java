@@ -23,10 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.projetrecette.Drawer.Aides.AidesActivity;
 import com.example.projetrecette.Drawer.Login.LoginActivity;
 import com.example.projetrecette.Drawer.MesRecettes.mesRecettesActivity;
 import com.example.projetrecette.Drawer.MonCompte.MonCompte;
 import com.example.projetrecette.Drawer.SignUp.SignUpActivity;
+import com.example.projetrecette.NavigationBar.Favorite.FavoriteFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -37,6 +39,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -56,13 +60,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.navigationView);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-
         Appbar();
         Drawer();
         checkLogin();
 
 
     }
+
 
     @Override
     protected void onResume() {
@@ -115,6 +119,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this, mesRecettesActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.navigation_aides:
+                intent = new Intent(this, AidesActivity.class);
+                startActivity(intent);
+                break;
+
             case R.id.navigation_signout:
                 FirebaseAuth.getInstance().signOut();
                 checkLogin();

@@ -91,7 +91,6 @@ public class RecipeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
 
@@ -157,16 +156,14 @@ public class RecipeFragment extends Fragment {
 
 
 
-        public RecipeModelViewHolder(@NonNull View itemView){
+        public RecipeModelViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name = itemView.findViewById(R.id.recipe_name);
             this.author = itemView.findViewById(R.id.recipe_author);
             this.rating = itemView.findViewById(R.id.recipe_rating);
             this.image = itemView.findViewById(R.id.recipe_image);
             itemView.setOnClickListener(this);
-
         }
-
 
 
         public void setRecipe(RecipeModel recipe){
@@ -207,7 +204,6 @@ public class RecipeFragment extends Fragment {
             startActivity(i);
         }
     }
-
 
 
     public void setAttribut(View v ){

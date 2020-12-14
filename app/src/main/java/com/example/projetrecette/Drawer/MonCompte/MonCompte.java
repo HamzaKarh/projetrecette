@@ -44,7 +44,7 @@ public class MonCompte extends AppCompatActivity {
     private static final int GALLERY_REQUEST_CODE = 123;
     ImageView ProfilPicture;
     //Button edit;
-    TextView fullname, email;
+    TextView fullname, email, changeEmail, changefullname;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, pictureDeleted;
@@ -82,7 +82,7 @@ public class MonCompte extends AppCompatActivity {
 
 
     public void onEmailClicked(){
-        email.setOnClickListener(new View.OnClickListener() {
+        changeEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MonCompte.this,ChangeEmail.class);
@@ -231,6 +231,8 @@ public class MonCompte extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         fullname = findViewById(R.id.account_fullname);
         email = findViewById(R.id.account_email);
+        changeEmail = findViewById(R.id.change_email);
+        changefullname = findViewById(R.id.change_username);
         //edit = findViewById(R.id.edit_button);
         //Utiliser ces méthodes pour changer el mot de pass, ou le mail,
         //fAuth.getCurrentUser(userId).updatePassword()

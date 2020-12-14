@@ -33,7 +33,7 @@
                     android:id="@+id/affichage_image"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:scaleType="fitCenter"
+                    android:scaleType="centerCrop"
                     android:adjustViewBounds="true"/>
 
 
@@ -253,9 +253,41 @@
 
                     </LinearLayout>
 
+                </LinearLayout>
 
+                <View
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#d7ccc8"/>
 
+                <LinearLayout
+                    android:id="@+id/affichage_layout_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp"
+                    android:visibility="visible">
 
+                    <TextView
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Vous avez aimé cette recette?"
+                        android:textSize="18dp"/>
+
+                    <RatingBar
+                        android:id="@+id/affichage_rate"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:max="5"
+                        android:scaleY="0.75"
+                        android:scaleX="0.75"
+                        android:progressTint="#ffeb3b"
+                        >
+
+                    </RatingBar>
 
                 </LinearLayout>
 

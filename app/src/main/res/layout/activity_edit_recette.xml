@@ -418,6 +418,18 @@
                     android:text="Editer la recette"
                     android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
+                <Button
+                    android:id="@+id/btnDelRecette"
+                    android:layout_margin="20dp"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="#e53935"
+                    android:text="Supprimer la Recette"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
+
+
 
 
 

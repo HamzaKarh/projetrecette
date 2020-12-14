@@ -4,14 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -51,8 +54,6 @@ public class FavoriteFragment extends Fragment {
     RecyclerView mResultList;
     FirestoreRecyclerAdapter adapter;
     ArrayList<String> listFav;
-    Query query;
-    Boolean isFav = false;
 
 
     @Override
@@ -65,7 +66,7 @@ public class FavoriteFragment extends Fragment {
             setAttribut();
             listFav = new ArrayList<String>();
             mResultList = view.findViewById(R.id.recycler_view_fav);
-            getFav();
+
 
             return view;
         }else{
@@ -75,28 +76,21 @@ public class FavoriteFragment extends Fragment {
     }
 
 
-
-
     public void getFav(){
-
         fStore.collection("users").document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 listFav = (ArrayList<String>) documentSnapshot.getData().get("Mes_Favoris");
                 System.out.println(listFav);
-                if(!listFav.isEmpty()){
-                    getQuery();
-                }
+
             }
         });
-
     }
 
+    public void getQuery2(){
 
-    public void getQuery(){
-
-        //Query query = fStore.collection("recipes").whereIn("Mes_Favoris", listFav);
-        Query query = fStore.collection("recipes").whereEqualTo("Auteur", userId);
+        Query query = fStore.collection("recipes").whereIn("Recipe_id", listFav);
+        //Query query = fStore.collection("recipes").whereEqualTo("Auteur", userId);
         FirestoreRecyclerOptions<RecipeModel> options = new FirestoreRecyclerOptions.Builder<RecipeModel>().setQuery(query, RecipeModel.class).build();
         adapter = new FirestoreRecyclerAdapter<RecipeModel, RecipeModelViewHolder>(options) {
 
@@ -118,7 +112,30 @@ public class FavoriteFragment extends Fragment {
         adapter.startListening();
         adapter.notifyDataSetChanged();
 
+    }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(userId != null){
+            getFav();
+
+            CountDownTimer c = new CountDownTimer(1000,500) {
+                @Override
+                public void onTick(long l) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    if(!listFav.isEmpty()){
+                        getQuery2();
+                    }
+                }
+            };
+            c.start();
+        }
 
 
     }
@@ -137,6 +154,7 @@ public class FavoriteFragment extends Fragment {
     }
 
 
+
     private class RecipeModelViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView name, author, cookingtime;
@@ -150,7 +168,6 @@ public class FavoriteFragment extends Fragment {
             super(itemView);
             this.name = itemView.findViewById(R.id.recipe_name);
             this.author = itemView.findViewById(R.id.recipe_author);
-            this.cookingtime = itemView.findViewById(R.id.recipe_time);
             this.rating = itemView.findViewById(R.id.recipe_rating);
             this.image = itemView.findViewById(R.id.recipe_image);
             itemView.setOnClickListener(this);
@@ -160,9 +177,7 @@ public class FavoriteFragment extends Fragment {
 
 
         public void setRecipe(RecipeModel recipe){
-            String temps = "Temps : " + recipe.getTemps_Cuisson() + " minutes";
             this.name.setText(recipe.getNom_Recette());
-            this.cookingtime.setText(temps);
             this.rating.setRating(Float.parseFloat(recipe.getRating()));
             this.recipeid = recipe.getRecipe_id();
 
