@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Allergie {
 
-    boolean gluten, arachid, lait, crustace, celeri, fruitcoq, poisson, moutarde;
+    public boolean gluten, arachid, lait, crustace, celeri, fruitcoq, poisson, moutarde;
     Map<String, Boolean> allergie = new HashMap<>();
 
     public Allergie(){
@@ -21,17 +21,19 @@ public class Allergie {
     }
 
     public Map<String, Boolean> sendMap(){
-        allergie.put("Gluten", gluten);
-        allergie.put("Arachid", arachid);
-        allergie.put("Lait", lait);
-        allergie.put("Crustacé", crustace);
-        allergie.put("Céléri", celeri);
-        allergie.put("Fruit_à_Coq", fruitcoq);
-        allergie.put("Poisson", poisson);
-        allergie.put("Moutarde", moutarde);
+        allergie.put("gluten", gluten);
+        allergie.put("arachid", arachid);
+        allergie.put("lait", lait);
+        allergie.put("crustace", crustace);
+        allergie.put("celeri", celeri);
+        allergie.put("fruitcoq", fruitcoq);
+        allergie.put("poisson", poisson);
+        allergie.put("moutarde", moutarde);
 
         return allergie;
     }
+
+
 
     public void setArachid(boolean arachid) {
         this.arachid = arachid;
@@ -64,5 +66,7 @@ public class Allergie {
     public void setPoisson(boolean poisson) {
         this.poisson = poisson;
     }
+
+
 
 }

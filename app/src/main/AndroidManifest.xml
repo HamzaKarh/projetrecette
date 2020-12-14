@@ -3,7 +3,7 @@
     package="com.example.projetrecette">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,15 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Recette.newRecetteActivity"></activity>
+        <activity android:name=".Drawer.Aides.AidesActivity"></activity>
+        <activity android:name=".Recette.newRecetteActivity" />
         <activity android:name=".Drawer.MesRecettes.mesRecettesActivity" />
         <activity android:name=".Drawer.MonCompte.MonCompte" />
         <activity android:name=".Drawer.SignUp.SignUpActivity" />
         <activity android:name=".Drawer.Login.LoginActivity" />
         <activity android:name=".Recette.AffichageRecette" />
         <activity android:name=".Recette.editRecetteActivity" />
-
-        <activity android:name=".MainActivity"
+        <activity android:name=".Drawer.MonCompte.ChangeEmail" />
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

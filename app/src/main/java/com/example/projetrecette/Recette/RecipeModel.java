@@ -3,15 +3,25 @@ package com.example.projetrecette.Recette;
 public class RecipeModel {
 
     String Auteur, Nom_Recette, Recipe_Pic, Temps_Cuisson, Rating, Recipe_id;
+    Allergie Allergies;
 
     public RecipeModel(){}
-    public RecipeModel(String Auteur, String Nom_Recette, String Recipe_Pic, String Temps_Cuisson, String Rating, String Recipe_id){
+    public RecipeModel(String Auteur, String Nom_Recette, String Recipe_Pic, String Temps_Cuisson, String Rating, String Recipe_id, Allergie Allergies){
         this.Auteur = Auteur;
         this.Nom_Recette = Nom_Recette;
         this.Recipe_Pic = Recipe_Pic;
         this.Temps_Cuisson = Temps_Cuisson;
         this.Rating = Rating;
         this.Recipe_id = Recipe_id;
+        this.Allergies = Allergies;
+    }
+
+    public void setAllergies(Allergie allergies) {
+        Allergies = allergies;
+    }
+
+    public Allergie getAllergies() {
+        return Allergies;
     }
 
     public void setRecipe_id(String recipe_id) {
