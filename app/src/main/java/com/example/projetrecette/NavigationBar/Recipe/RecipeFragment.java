@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,20 +95,10 @@ public class RecipeFragment extends Fragment {
         }
     }
 
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
-        mSearchField = view.findViewById(R.id.search_recipe);
-        mSearchBtn = view.findViewById(R.id.search_button);
-
-        setAttribut(view);
-
-        fStore = FirebaseFirestore.getInstance();
-        mResultList = view.findViewById(R.id.result_list);
+    public void onResume() {
+        super.onResume();
+        mSearchField = getView().findViewById(R.id.search_recipe);
 
         mSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,10 +129,40 @@ public class RecipeFragment extends Fragment {
                 return false;
             }
         });
+        mSearchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
-        mResultList.setHasFixedSize(true);
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                getQuery(mSearchField.getText().toString().trim());
+                System.out.println(mSearchField.getText().toString().trim());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         mResultList.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        mResultList.setAdapter(adapter);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
+        mSearchField = view.findViewById(R.id.search_recipe);
+        mSearchBtn = view.findViewById(R.id.search_button);
+
+        setAttribut(view);
+
+        fStore = FirebaseFirestore.getInstance();
+        mResultList = view.findViewById(R.id.result_list);
+
 
 
         return view;
@@ -218,7 +240,8 @@ public class RecipeFragment extends Fragment {
 
 
     public void getQuery(String s){
-        Query query = fStore.collection("recipes").whereEqualTo("Nom_Recette", s);
+        //Query query = fStore.collection("recipes").whereEqualTo("Nom_Recette", s);
+        Query query = fStore.collection("recipes").orderBy("Nom_Recette").startAt(s).endAt(s+ "\uf8ff");
         FirestoreRecyclerOptions<RecipeModel> options = new FirestoreRecyclerOptions.Builder<RecipeModel>().setQuery(query, RecipeModel.class).build();
         adapter = new FirestoreRecyclerAdapter<RecipeModel, RecipeModelViewHolder>(options) {
 
@@ -236,6 +259,7 @@ public class RecipeFragment extends Fragment {
         };
 
         mResultList.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mResultList.setAdapter(adapter);
         mResultList.setAdapter(adapter);
     }
 

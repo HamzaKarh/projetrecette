@@ -60,7 +60,7 @@
                             android:layout_gravity="center"
                             android:ems="10"
                             android:fontFamily="@font/nunito_bold"
-                            android:inputType="textPersonName"
+                            android:inputType="textNoSuggestions"
                             android:paddingLeft="20dp"
                             android:paddingTop="10dp"
                             android:paddingRight="20dp"
