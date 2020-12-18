@@ -44,7 +44,7 @@ public class MonCompte extends AppCompatActivity {
     private static final int GALLERY_REQUEST_CODE = 123;
     ImageView ProfilPicture;
     //Button edit;
-    TextView fullname, email, changeEmail, changefullname;
+    TextView fullname, email, changeEmail, changefullname, changePassword;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, pictureDeleted;
@@ -59,11 +59,16 @@ public class MonCompte extends AppCompatActivity {
         setContentView(R.layout.activity_mon_compte);
         addToolbar();
         setAttribut();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setProfilPicture();
         selectImage();
         onEmailClicked();
-
-
+        onNameClicked();
+        onPasswordClicked();
 
     }
 
@@ -86,6 +91,26 @@ public class MonCompte extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MonCompte.this,ChangeEmail.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void onNameClicked(){
+        changefullname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MonCompte.this, ChangeName.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void onPasswordClicked(){
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MonCompte.this, ChangePassword.class);
                 startActivity(intent);
             }
         });
@@ -134,22 +159,18 @@ public class MonCompte extends AppCompatActivity {
                     storageReferenceUrl.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            //Log.d(pictureDeleted, "onSuccess: deleted file");
+                            Log.d(pictureDeleted, "onSuccess: deleted file");
                             System.err.println("Successfully deleted");
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            // Uh-oh, an error occurred!
-                            //Log.d(pictureDeleted, "onFailure: did not delete file");
+                            Log.d(pictureDeleted, "onFailure: did not delete file");
                             System.err.println("Error: did not delete file");
                         }
                     });}
             }
         });
-
-
-
     }
 
     private void uploadFile() {
@@ -233,6 +254,7 @@ public class MonCompte extends AppCompatActivity {
         email = findViewById(R.id.account_email);
         changeEmail = findViewById(R.id.change_email);
         changefullname = findViewById(R.id.change_username);
+        changePassword = findViewById(R.id.change_password);
         //edit = findViewById(R.id.edit_button);
         //Utiliser ces méthodes pour changer el mot de pass, ou le mail,
         //fAuth.getCurrentUser(userId).updatePassword()

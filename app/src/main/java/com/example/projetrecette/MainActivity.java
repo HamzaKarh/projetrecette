@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             /*Initialisation*/
 
+
             retrieveData();
 
         }else{

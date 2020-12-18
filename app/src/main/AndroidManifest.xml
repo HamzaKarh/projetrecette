@@ -21,6 +21,8 @@
         <activity android:name=".Recette.AffichageRecette" />
         <activity android:name=".Recette.editRecetteActivity" />
         <activity android:name=".Drawer.MonCompte.ChangeEmail" />
+        <activity android:name=".Drawer.MonCompte.ChangeName" />
+        <activity android:name=".Drawer.MonCompte.ChangePassword" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
