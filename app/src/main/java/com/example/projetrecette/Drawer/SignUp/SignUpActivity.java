@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import org.w3c.dom.Document;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,8 +82,8 @@ public class SignUpActivity extends AppCompatActivity {
     public void adddatatoFireBase(String email, String fullname){
         userId = fAuth.getCurrentUser().getUid();
         DocumentReference documentReference = fStore.collection("users").document(userId);
-        Map<String,String> mesrecettes = new HashMap<>();
-        Map<String,String> mesfavoris = new HashMap<>();
+        ArrayList<String> mesrecettes = new ArrayList<String>();
+        ArrayList<String> mesfavoris = new ArrayList<String>();
         Map<String,Object> user = new HashMap<>();
         user.put("Email", email);
         user.put("Fullname", fullname);
