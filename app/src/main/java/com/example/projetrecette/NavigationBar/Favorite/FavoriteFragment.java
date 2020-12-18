@@ -23,6 +23,7 @@ import com.example.projetrecette.Drawer.MesRecettes.mesRecettesActivity;
 import com.example.projetrecette.GlideApp;
 import com.example.projetrecette.R;
 import com.example.projetrecette.Recette.AffichageRecette;
+import com.example.projetrecette.Recette.Allergie;
 import com.example.projetrecette.Recette.RecipeModel;
 import com.example.projetrecette.Recette.newRecetteActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -157,7 +158,8 @@ public class FavoriteFragment extends Fragment {
 
     private class RecipeModelViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView name, author, cookingtime;
+        TextView name, author;
+        TextView A,CR,CE,F,G,M,L,P;
         RatingBar rating;
         ImageView image;
         String recipeid;
@@ -170,8 +172,31 @@ public class FavoriteFragment extends Fragment {
             this.author = itemView.findViewById(R.id.recipe_author);
             this.rating = itemView.findViewById(R.id.recipe_rating);
             this.image = itemView.findViewById(R.id.recipe_image);
+            iniAllergy();
             itemView.setOnClickListener(this);
 
+        }
+
+        public void iniAllergy(){
+            this.A = itemView.findViewById(R.id.item_arachid);
+            this.CR = itemView.findViewById(R.id.item_crustace);
+            this.CE = itemView.findViewById(R.id.item_celeri);
+            this.F = itemView.findViewById(R.id.item_fruit);
+            this.G = itemView.findViewById(R.id.item_gluten);
+            this.M = itemView.findViewById(R.id.item_moutarde);
+            this.L = itemView.findViewById(R.id.item_lait);
+            this.P = itemView.findViewById(R.id.item_poisson);
+        }
+
+        public void Allergy(Allergie allergie){
+            if(allergie.arachid){this.A.setVisibility(View.VISIBLE);}
+            if(allergie.crustace){this.CR.setVisibility(View.VISIBLE);}
+            if(allergie.celeri){this.CE.setVisibility(View.VISIBLE);}
+            if(allergie.fruitcoq){this.F.setVisibility(View.VISIBLE);}
+            if(allergie.gluten){this.G.setVisibility(View.VISIBLE);}
+            if(allergie.moutarde){this.M.setVisibility(View.VISIBLE);}
+            if(allergie.lait){this.L.setVisibility(View.VISIBLE);}
+            if(allergie.poisson){this.P.setVisibility(View.VISIBLE);}
         }
 
 
@@ -183,6 +208,8 @@ public class FavoriteFragment extends Fragment {
 
             final TextView aut = this.author;
             final ImageView img = this.image;
+
+            Allergy(recipe.getAllergies());
 
             /*Get Username*/
             fStore = FirebaseFirestore.getInstance();
